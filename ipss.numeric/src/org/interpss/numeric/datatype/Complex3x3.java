@@ -2,6 +2,7 @@ package org.interpss.numeric.datatype;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.linear.Array2DRowFieldMatrix;
+import org.apache.commons.math3.linear.FieldLUDecomposition;
 import org.apache.commons.math3.linear.FieldMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 
@@ -20,8 +21,6 @@ public class Complex3x3 {
 			{new Complex(1.0/3,0), a.multiply(a).divide(3)  ,a.divide(3)},
 			{new Complex(1.0/3,0), new Complex(1.0/3,0)       ,new Complex(1.0/3,0)}};
 	 
-	 public static Array2DRowFieldMatrix fmT012_abc = new Array2DRowFieldMatrix(Tabc_120);
-	 public static Array2DRowFieldMatrix fmTabc_120= new Array2DRowFieldMatrix(Tabc_120);
 
 	public  Complex 
 		aa = new Complex(0.0, 0.0), 
@@ -145,6 +144,51 @@ public class Complex3x3 {
 		
    	}
     
+    
+    public  Complex3x3 mulitply (double factor){
+    	 Complex3x3 cplxM3x3 = new  Complex3x3();
+    	 cplxM3x3.aa = aa.multiply(factor);
+    	 cplxM3x3.ab = ab.multiply(factor);
+    	 cplxM3x3.ac = ac.multiply(factor);
+    	 
+    	 cplxM3x3.ba = ba.multiply(factor);
+    	 cplxM3x3.bb = bb.multiply(factor);
+    	 cplxM3x3.bc = bc.multiply(factor);
+    	 
+    	 cplxM3x3.ca = ca.multiply(factor);
+    	 cplxM3x3.cb = cb.multiply(factor);
+    	 cplxM3x3.cc = cc.multiply(factor);
+    	 
+    	 return cplxM3x3;
+    }
+    
+    public Complex3x3 inv(){
+    	Array2DRowFieldMatrix fm = new Array2DRowFieldMatrix(this.toComplex2DAry());
+    	FieldLUDecomposition<Complex> lu = new FieldLUDecomposition<>(fm);
+		Complex[][] inv = lu.getSolver().getInverse().getData();
+		return new Complex3x3(inv);
+    }
+    
+    public Complex3x3 transpose(){
+    	Complex3x3 cplxM3x3 = new  Complex3x3();
+    	 cplxM3x3.aa = this.aa;
+		 cplxM3x3.ab = this.ba;
+		 cplxM3x3.ac = this.ca;
+		 
+		 
+		 cplxM3x3.ba = this.ab;
+		 cplxM3x3.bb = this.bb;
+		 cplxM3x3.bc = this.cb;
+		 
+		 
+		 cplxM3x3.ca = this.ac;
+		 cplxM3x3.cb = this.bc;
+		 cplxM3x3.cc = this.cc;
+		 
+		 return cplxM3x3;
+    }
+    
+    
     public  Complex3x3 To120(){
     	return new Complex3x3( Tabc_120).mulitply(this).mulitply(new Complex3x3( T120_abc));
 		
@@ -170,6 +214,19 @@ public class Complex3x3 {
     public Complex[][] toComplex2DAry(){
     	Complex[][] cplx2D = new Complex[3][3];
     	
+    	cplx2D[0][0] = this.aa;
+    	cplx2D[0][1] = this.ab;
+    	cplx2D[0][2] = this.ac;
+    	
+    	
+    	cplx2D[1][0] = this.ba;
+    	cplx2D[1][1] = this.bb;
+    	cplx2D[1][2] = this.bc;
+    	
+    	
+    	cplx2D[2][0] = this.ca;
+    	cplx2D[2][1] = this.cb;
+    	cplx2D[2][2] = this.cc;
     	
     	return cplx2D;
     }

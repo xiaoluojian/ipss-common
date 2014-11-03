@@ -102,6 +102,16 @@ public class Complex3x1 implements java.io.Serializable {
 				NumericConstant.a2.multiply(z12.c_2));
 		return new Complex3x1(a, b, c);
 	}
+	
+	
+	public Complex3x1 multiply(double factor){
+		Complex3x1 c3x1 = new Complex3x1();
+		c3x1.a_0 = this.a_0.multiply(factor);
+		c3x1.b_1 = this.b_1.multiply(factor);
+		c3x1.c_2 = this.c_2.multiply(factor);
+		
+		return c3x1;
+	}
 
 	/**
 	 * Convert the obj to a string.
