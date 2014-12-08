@@ -231,6 +231,26 @@ public class Complex3x3 {
     	return cplx2D;
     }
     
+    public String toString(){
+    	String s = "";
+    	
+    	s += "aa = "+this.aa.toString()+",";
+    	s += "ab = "+this.ab.toString()+",";
+    	s += "ac = "+this.ac.toString()+"\n";
+    	
+    	s += "ba = "+this.ba.toString()+",";
+    	s += "bb = "+this.bb.toString()+",";
+    	s += "bc = "+this.bc.toString()+"\n";
+    	
+    	s += "ca = "+this.ca.toString()+",";
+    	s += "cb = "+this.cb.toString()+",";
+    	s += "cc = "+this.cc.toString()+"\n";
+    	
+    	return s;
+    	
+    			
+    }
+    
    
     
     
